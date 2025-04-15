@@ -1,32 +1,50 @@
-# service.py
-
 from urllib.parse import unquote
 import logging
-from policy.config import ROOM_CONFIG 
+from policy.config import ROOM_CONFIG
 
 logger = logging.getLogger("pexip_policy.service")
 
-def get_service_configuration(local_alias_encoded: str):
-    local_alias = unquote(local_alias_encoded).lower()
+DEFAULT_DOMAIN = "example.com"
 
-    config = ROOM_CONFIG.get(local_alias, {
-        "service_tag": "default",
-        "name": "Default Room"
-    })
+def normalize_alias(raw_alias: str) -> str:
+    decoded = unquote(raw_alias).lower().strip()
+    if "@" not in decoded:
+        decoded = f"sip:{decoded}@{DEFAULT_DOMAIN}"
+    return decoded
+
+def extract_alias_user(local_alias: str) -> str:
+    # Returns just 'engineering' from 'sip:engineering@example.com'
+    return local_alias.split("@")[0].replace("sip:", "").lower()
+
+def get_service_configuration(local_alias_encoded: str):
+    local_alias = normalize_alias(local_alias_encoded)
 
     logger.debug("Service request for alias: %s", local_alias)
-    logger.debug("Resolved config: %s", config)
+
+    config = ROOM_CONFIG.get(local_alias)
+    
+    if config:
+        name = config["name"] + " | " + extract_alias_user(local_alias)
+        service_tag = config["service_tag"]
+    elif local_alias.endswith(f"@{DEFAULT_DOMAIN}"):
+        name = extract_alias_user(local_alias)
+        service_tag = "default"
+    else:
+        name = "Default Room | " + local_alias
+        service_tag = "default"
+
+    logger.debug("Resolved name: %s, tag: %s", name, service_tag)
 
     result_data = {
         "service_type": "conference",
-        "name": config["name"],
+        "name": name,
         "description": "Pexip Test Conference Room",
         "aliases": [local_alias],
         "pin": "",
         "guest_pin": "",
-        "allow_guests": False,  # boolean
+        "allow_guests": False,
         "media_encryption": "best_effort",
-        "enable_chat": "default",  # string, Pexip-specific
+        "enable_chat": "default",
         "enable_overlay_text": True,
         "enable_active_speaker_indication": "true",
         "max_callrate_in": 8192000,
@@ -36,7 +54,7 @@ def get_service_configuration(local_alias_encoded: str):
         "ivr_theme": None,
         "host_view": "one_main_seven_pips",
         "guests_can_present": True,
-        "service_tag": config["service_tag"],
+        "service_tag": service_tag,
     }
 
     return {

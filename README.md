@@ -88,4 +88,4 @@ ROOM_CONFIG = {
 
 With the above config, we allow anyone to register using the @example.com or @trusted.net domains.
 
-For service configuration if someone dials either engineering@example.com or sales@example.com, it will create a VMR with the name Engineering Room or Sales Room with individual service tags. 
+For service configuration if someone dials either sip:engineering@example.com (or just engineering) or sip:sales@example.com (or just sales), it will create a VMR with the name Engineering Room or Sales Room with individual service tags. Otherwise, create a Default Romm - {local_alias}
