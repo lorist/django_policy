@@ -63,7 +63,7 @@ This project provides a modular Django-based external policy server for [Pexip I
 | /policy/v1/participant/properties | GET | Participant-specific config |
 | /policy/v1/registrations/<alias> | GET | Registration policy check |
 
-### configuration
+### Configuration
 
 Customize logic and rules in `policy/config.py`:
 
@@ -83,3 +83,9 @@ ROOM_CONFIG = {
     }
 }
 ```
+
+### Functionality
+
+With the above config, we allow anyone to register using the @example.com or @trusted.net domains.
+
+For service configuration if someone dials either engineering@example.com or sales@example.com, it will create a VMR with the name Engineering Room or Sales Room with individual service tags. 
