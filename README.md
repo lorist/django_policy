@@ -45,17 +45,6 @@ This project provides a modular Django-based external policy server for [Pexip I
     python manage.py runserver 0.0.0.0:8000
 ```
 
-### Docker
-#### Build and run
-```bash
-    docker build -t pexip-policy .
-    docker run -p 8000:8000 pexip-policy
-```
-#### or use docker-compose
-```bash
-    docker-compose up --build
-```
-
 ### API Endpoints
 | Endpoint  | Method | Description |
 | --- | --- | --- |
@@ -132,14 +121,23 @@ Ensure consistency between `config.py` and the database:
 python manage.py check_room_config_conflicts
 ```
 
-
-
----
-
-#### 4. **Admin Access Instructions**
-
 ## 🛠 Accessing Django Admin
+```bash
+python manage.py createsuperuser
+```
 
 Start the server and visit:
 `http://localhost:8000/admin`
 
+---
+
+## Docker
+### Build and run
+```bash
+    docker build -t pexip-policy .
+    docker run -p 8000:8000 pexip-policy
+```
+### or use docker-compose
+```bash
+    docker-compose up --build
+```
