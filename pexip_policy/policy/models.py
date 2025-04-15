@@ -7,3 +7,9 @@ class RoomConfig(models.Model):
 
     def __str__(self):
         return f"{self.alias} → {self.name}"
+
+class AllowedDomain(models.Model):
+    domain = models.CharField(max_length=255, unique=True)  # e.g. '@example.com'
+
+    def __str__(self):
+        return self.domain
