@@ -27,6 +27,6 @@ def participant_properties(request):
 @require_GET
 def service_configuration(request):
     local_alias = request.GET.get("local_alias", "")
-    response_data = get_service_configuration(local_alias)
+    response_data = get_service_configuration(local_alias, request.GET.dict())
     logger.debug("Service response: %s", response_data)
     return JsonResponse(response_data)

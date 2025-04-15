@@ -1,6 +1,6 @@
 from urllib.parse import unquote
 import logging
-from policy.config import ROOM_CONFIG
+from policy.models import RoomConfig, PolicyLog
 
 logger = logging.getLogger("pexip_policy.service")
 
@@ -15,32 +15,40 @@ def normalize_alias(raw_alias: str) -> str:
 def extract_alias_user(local_alias: str) -> str:
     return local_alias.split("@")[0].replace("sip:", "").lower()
 
-def get_service_configuration(local_alias_encoded: str):
+def get_service_configuration(local_alias_encoded: str, params: dict):
     local_alias = normalize_alias(local_alias_encoded)
     logger.debug("Service request for alias: %s", local_alias)
 
-    from policy.models import RoomConfig
-
-    # Step 1: Try database
     try:
         db_config = RoomConfig.objects.get(alias=local_alias)
         name = db_config.name + " | " + extract_alias_user(local_alias)
         service_tag = db_config.service_tag
+        logger.debug("Using DB config for alias: %s", local_alias)
     except RoomConfig.DoesNotExist:
-        # Step 2: Try ROOM_CONFIG fallback
-        config = ROOM_CONFIG.get(local_alias)
-        if config:
-            name = config["name"] + " | " + extract_alias_user(local_alias)
-            service_tag = config["service_tag"]
-        # Step 3: Final fallback
-        elif local_alias.endswith(f"@{DEFAULT_DOMAIN}"):
+        if local_alias.endswith(f"@{DEFAULT_DOMAIN}"):
             name = extract_alias_user(local_alias)
             service_tag = "default"
         else:
             name = "Default Room | " + local_alias
             service_tag = "default"
+        logger.debug("Alias not found in DB. Using fallback for alias: %s", local_alias)
 
-    logger.debug("Resolved name: %s, tag: %s", name, service_tag)
+    # Log policy event
+    remote_address = params.get("remote_address", "")
+    protocol = params.get("protocol", "")
+    location = params.get("location", "")
+
+    PolicyLog.objects.create(
+        policy_type="service",
+        alias=local_alias,
+        action=None,
+        details={
+            "remote_address": remote_address,
+            "protocol": protocol,
+            "location": location,
+            "service_tag": service_tag,
+        }
+    )
 
     result_data = {
         "service_type": "conference",
