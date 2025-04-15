@@ -10,3 +10,11 @@ class RoomConfigAdmin(admin.ModelAdmin):
 class AllowedDomainAdmin(admin.ModelAdmin):
     list_display = ("domain",)
     search_fields = ("domain",)
+
+from .models import PolicyLog
+
+@admin.register(PolicyLog)
+class PolicyLogAdmin(admin.ModelAdmin):
+    list_display = ("timestamp", "policy_type", "alias", "action")
+    list_filter = ("policy_type", "action")
+    search_fields = ("alias",)

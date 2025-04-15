@@ -13,7 +13,8 @@ logger = logging.getLogger("pexip_policy")
 
 @require_GET
 def registration_policy(request, alias):
-    response_data = get_registration_policy(alias)
+    # response_data = get_registration_policy(alias)
+    response_data = get_registration_policy(alias, request.GET.dict())
     logger.debug("Registration response: %s", response_data)
     return JsonResponse(response_data)
 
