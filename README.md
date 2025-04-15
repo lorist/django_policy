@@ -122,7 +122,7 @@ You can import your static config (`ROOM_CONFIG`, `ALLOWED_REGISTRATION_DOMAINS`
 ```bash
 python manage.py sync_room_config
 python manage.py sync_allowed_domains
-
+```
 
 ## 🔍 Validation Tools
 
@@ -130,3 +130,16 @@ Ensure consistency between `config.py` and the database:
 
 ```bash
 python manage.py check_room_config_conflicts
+```
+
+
+
+---
+
+#### 4. **Admin Access Instructions**
+
+## 🛠 Accessing Django Admin
+
+Start the server and visit:
+`http://localhost:8000/admin`
+
