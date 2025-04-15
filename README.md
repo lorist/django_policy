@@ -89,3 +89,18 @@ ROOM_CONFIG = {
 With the above config, we allow anyone to register using the @example.com or @trusted.net domains.
 
 For service configuration if someone dials either sip:engineering@example.com (or just engineering) or sip:sales@example.com (or just sales), it will create a VMR with the name Engineering Room or Sales Room with individual service tags. Otherwise, create a Default Romm - {local_alias}
+
+#### Database bits
+
+```
+python manage.py makemigrations
+python manage.py migrate
+python manage.py makemigrations policy
+python manage.py migrate
+```
+
+Sync config from the config.py to the db:
+```
+    python manage.py sync_room_config
+```
+#### 
