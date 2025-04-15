@@ -11,7 +11,7 @@ https://docs.djangoproject.com/en/5.2/ref/settings/
 """
 
 from pathlib import Path
-
+import os
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -67,11 +67,19 @@ INSTALLED_APPS = [
 # make the admin page look beautiful
 JAZZMIN_SETTINGS = {
     "site_title": "Pexip Policy Admin",
-    "site_header": "Pexip Policy Configuration",
+    "site_header": "Pexip Policy",
     "site_brand": "PexipPolicy",
     "welcome_sign": "Welcome to Pexip Policy Admin",
-    "copyright": "Lorist",
+    "site_logo": "images/pexpolicy_square.webp",  # 👈 Relative to static dir
+    # "site_logo_classes": "img-circle",  # Optional
+    "show_sidebar": True,
+    "navigation_expanded": True,
+    "order_with_respect_to": ["policy", "allowed_domain", "auth"],
+    "hide_apps": ["sessions"],
+    "hide_models": ["auth.Group"],
+
 }
+
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -149,6 +157,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/5.2/howto/static-files/
 
 STATIC_URL = 'static/'
+STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
