@@ -103,4 +103,30 @@ Sync config from the config.py to the db:
 ```
     python manage.py sync_room_config
 ```
-#### 
+## ⚙️ Dynamic Configuration
+
+Instead of hardcoding alias rules, you can now configure these via the Django Admin UI:
+
+### RoomConfig (Service Configuration)
+- Maps `local_alias` (e.g. `sip:sales@example.com`) to:
+  - Room name
+  - `service_tag`
+
+### AllowedDomain (Registration Policy)
+- Controls which domains (e.g. `@lorist.org`) are allowed to register
+
+## 🧪 Syncing Static Config to Database
+
+You can import your static config (`ROOM_CONFIG`, `ALLOWED_REGISTRATION_DOMAINS`) into the DB using:
+
+```bash
+python manage.py sync_room_config
+python manage.py sync_allowed_domains
+
+
+## 🔍 Validation Tools
+
+Ensure consistency between `config.py` and the database:
+
+```bash
+python manage.py check_room_config_conflicts
