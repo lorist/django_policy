@@ -69,15 +69,50 @@ JAZZMIN_SETTINGS = {
     "site_title": "Pexip Policy Admin",
     "site_header": "Pexip Policy",
     "site_brand": "PexipPolicy",
+    "theme": "slate",
     "welcome_sign": "Welcome to Pexip Policy Admin",
-    # "site_logo": "images/pexpolicy_square.webp",  # 👈 Relative to static dir
-    # "site_logo_classes": "img-circle",  # Optional
+    "site_logo": "images/pexpolicy_200.png",  # 👈 Relative to static dir
+    "custom_css": "css/admin_custom.css",
+    # "site_logo_classes": "img-fluid login-logo",
+    "site_logo_classes": "img-circle",  # Optional
     "show_sidebar": True,
     "navigation_expanded": True,
-    "order_with_respect_to": ["policy", "allowed_domain", "auth"],
-    "hide_apps": ["sessions"],
-    "hide_models": ["auth.Group"],
+    "order_with_respect_to": ["policy", "allowed_domain"],
+    "hide_apps": ["sessions", "auth"],
+    "show_ui_builder": True,
+    
 
+}
+JAZZMIN_UI_TWEAKS = {
+    "navbar_small_text": False,
+    "footer_small_text": False,
+    "body_small_text": False,
+    "brand_small_text": False,
+    "brand_colour": False,
+    "accent": "accent-primary",
+    "navbar": "navbar-dark",
+    "no_navbar_border": False,
+    "navbar_fixed": False,
+    "layout_boxed": False,
+    "footer_fixed": False,
+    "sidebar_fixed": True,
+    "sidebar": "sidebar-dark-primary",
+    "sidebar_nav_small_text": False,
+    "sidebar_disable_expand": False,
+    "sidebar_nav_child_indent": False,
+    "sidebar_nav_compact_style": False,
+    "sidebar_nav_legacy_style": False,
+    "sidebar_nav_flat_style": False,
+    "theme": "slate",
+    "dark_mode_theme": "superhero",
+    "button_classes": {
+        "primary": "btn-primary",
+        "secondary": "btn-secondary",
+        "info": "btn-info",
+        "warning": "btn-warning",
+        "danger": "btn-danger",
+        "success": "btn-success"
+    }
 }
 
 
@@ -156,7 +191,8 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.2/howto/static-files/
 
-STATIC_URL = 'static/'
+STATIC_URL = "/static/"
+STATICFILES_DIRS = [os.path.join(BASE_DIR, "static")]  # optional if using global /static
 STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
 
 # Default primary key field type
