@@ -70,7 +70,7 @@ JAZZMIN_SETTINGS = {
     "site_header": "Pexip Policy",
     "site_brand": "PexipPolicy",
     "welcome_sign": "Welcome to Pexip Policy Admin",
-    "site_logo": "images/pexpolicy_square.webp",  # 👈 Relative to static dir
+    # "site_logo": "images/pexpolicy_square.webp",  # 👈 Relative to static dir
     # "site_logo_classes": "img-circle",  # Optional
     "show_sidebar": True,
     "navigation_expanded": True,
