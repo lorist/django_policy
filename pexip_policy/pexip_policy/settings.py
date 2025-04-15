@@ -54,6 +54,7 @@ ALLOWED_HOSTS = ['*']
 # Application definition
 
 INSTALLED_APPS = [
+    "jazzmin",  # 👈 must be first
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -62,6 +63,15 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'policy',
 ]
+
+# make the admin page look beautiful
+JAZZMIN_SETTINGS = {
+    "site_title": "Pexip Policy Admin",
+    "site_header": "Pexip Policy Configuration",
+    "site_brand": "PexipPolicy",
+    "welcome_sign": "Welcome to Pexip Policy Admin",
+    "copyright": "Lorist",
+}
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
