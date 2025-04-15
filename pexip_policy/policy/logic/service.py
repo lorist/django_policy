@@ -2,23 +2,14 @@
 
 from urllib.parse import unquote
 import logging
+from policy.config import ROOM_CONFIG 
+
 logger = logging.getLogger("pexip_policy.service")
 
 def get_service_configuration(local_alias_encoded: str):
     local_alias = unquote(local_alias_encoded).lower()
 
-    room_config = {
-        "sip:engineering@example.com": {
-            "service_tag": "engineering-room",
-            "name": "Engineering Room"
-        },
-        "sip:sales@example.com": {
-            "service_tag": "sales-room",
-            "name": "Sales Room"
-        }
-    }
-
-    config = room_config.get(local_alias, {
+    config = ROOM_CONFIG.get(local_alias, {
         "service_tag": "default",
         "name": "Default Room"
     })

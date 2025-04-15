@@ -42,7 +42,7 @@ This project provides a modular Django-based external policy server for [Pexip I
 
 ```bash
     pip install -r requirements.txt
-    python manage.py runserver
+    python manage.py runserver 0.0.0.0:8000
 ```
 
 ### Docker
