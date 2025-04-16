@@ -28,10 +28,11 @@ def get_service_configuration(local_alias_encoded: str, params: dict):
         if local_alias.endswith(f"@{DEFAULT_DOMAIN}"):
             name = extract_alias_user(local_alias)
             service_tag = "default"
+            logger.debug("Alias not found in DB. Using fallback for alias: %s", local_alias)
         else:
             name = "Default Room | " + local_alias
             service_tag = "default"
-        logger.debug("Alias not found in DB. Using fallback for alias: %s", local_alias)
+        
 
     # Log policy event
     remote_address = params.get("remote_address", "")
