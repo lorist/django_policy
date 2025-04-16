@@ -4,7 +4,7 @@ from policy.models import RoomConfig, PolicyLog
 
 logger = logging.getLogger("pexip_policy.service")
 
-DEFAULT_DOMAIN = "example.com"
+DEFAULT_DOMAIN = "lorist.org"
 
 def normalize_alias(raw_alias: str) -> str:
     decoded = unquote(raw_alias).lower().strip()
